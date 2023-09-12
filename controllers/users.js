@@ -86,6 +86,8 @@ module.exports.updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError(ERRORS.INVALID_DATA));
+      } else if (err.code === 11000) {
+        next(new ConflictError(ERRORS.EMAIL_CONFLICT));
       } else {
         next(err);
       }
