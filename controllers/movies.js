@@ -8,9 +8,10 @@ const {
   NotFoundError,
 } = require('../utils/errors/indexErrors');
 
-// получаем список фильмов
+// получаем список только тех фильмов, которые создал пользователь
 module.exports.getAllMovies = (req, res, next) => {
-  Movie.find({})
+  const owner = req.user._id;
+  Movie.find({ owner })
     .then((movies) => res.send(movies))
     .catch(next);
 };
